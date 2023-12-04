@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.example.hw4.databinding.FragmentHistoryBinding
 import com.example.hw4.databinding.FragmentMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,7 +38,11 @@ class MainFragment : Fragment() {
                 viewModel.getLiveLoveData(etFirstName.text.toString(), etSecondName.text.toString())
                     .observe(viewLifecycleOwner, Observer {
                         tvResult.text = it.toString()
+                        App.appDatabase.getDao().insert(it)
                     })
+            }
+            btnHistory.setOnClickListener {
+                findNavController().navigate(R.id.historyFragment)
             }
         }
     }
