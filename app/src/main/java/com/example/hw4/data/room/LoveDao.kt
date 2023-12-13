@@ -1,5 +1,6 @@
 package com.example.hw4.data.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -12,5 +13,5 @@ interface LoveDao {
     fun insert(lioveModel: LoveModel)
 /* ORDER BY fname ASC*/
     @Query ("SELECT * FROM `love-table` ORDER BY fname ASC")
-    fun getAll(): List<LoveModel>
+    fun getAll(): LiveData<LoveModel>
 }

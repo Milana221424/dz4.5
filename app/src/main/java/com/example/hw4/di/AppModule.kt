@@ -2,7 +2,10 @@ package com.example.hw4.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.room.Room
 import com.example.hw4.data.local.Pref
+import com.example.hw4.data.room.AppDatabase
+import com.example.hw4.data.room.LoveDao
 import com.example.hw4.remote.LoveApi
 import dagger.Module
 import dagger.Provides
@@ -29,5 +32,16 @@ class AppModule {
     @Provides
     fun providePref(sharedPreferences: SharedPreferences): Pref {
         return Pref(sharedPreferences)
+    }
+
+    @Provides
+    fun provideDatabase(@ApplicationContext context: Context):AppDatabase{
+        return Room.databaseBuilder(context, AppDatabase::class.java, "love-file")
+            .allowMainThreadQueries().build()
+    }
+
+    @Provides
+    fun provideDao(appDatabase: AppDatabase):LoveDao{
+        return appDatabase.getDao()
     }
 }
